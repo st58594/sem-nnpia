@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: nnpia
+server:
+  port: 8081
