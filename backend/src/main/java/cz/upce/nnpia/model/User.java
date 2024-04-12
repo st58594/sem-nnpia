@@ -1,6 +1,8 @@
 package cz.upce.nnpia.model;
 
+import cz.upce.nnpia.dtos.response.UserResponse;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,14 +22,19 @@ public class User extends BaseEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, unique = true)
+    @NotBlank
     private String username;
     @Column(nullable = false, unique = true)
+    @NotBlank
     private String email;
     @Column(nullable = false)
+    @NotBlank
     private String firstName;
     @Column(nullable = false)
+    @NotBlank
     private String lastName;
     @Column(nullable = false)
+    @NotBlank
     private String password;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -36,6 +43,10 @@ public class User extends BaseEntity implements UserDetails {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles;
+
+    public UserResponse toDto(){
+        return new UserResponse(id, username, email, firstName,lastName, roles, created, updated);
+    }
 
     //region UserDetails
     @Override
