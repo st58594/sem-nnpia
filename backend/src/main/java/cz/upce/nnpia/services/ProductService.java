@@ -8,6 +8,8 @@ import cz.upce.nnpia.model.Product;
 import cz.upce.nnpia.repositories.ProductRepository;
 import cz.upce.nnpia.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +24,8 @@ public class ProductService {
 
 
 
-    public List<ProductResponse> findAll() {
-        return productRepository.findAll()
+    public List<ProductResponse> findAll(Specification<Product> filter, PageRequest pageRequest) {
+        return productRepository.findAll(filter, pageRequest)
                 .stream()
                 .map(Product::toDto)
                 .collect(Collectors.toList());
