@@ -1,4 +1,4 @@
-package cz.upce.nnpia.mappers;
+package cz.upce.nnpia.services.mappers;
 
 import cz.upce.nnpia.dtos.request.RoleRequest;
 import cz.upce.nnpia.model.Role;

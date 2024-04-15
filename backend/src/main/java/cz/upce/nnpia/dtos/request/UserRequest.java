@@ -1,7 +1,7 @@
 package cz.upce.nnpia.dtos.request;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.Set;
 
@@ -16,6 +16,6 @@ public record UserRequest(
         String lastName,
         @NotBlank(message = "Password must not be blank")
         String password,
-        @NotNull(message = "Roles must not be null")
+        @NotEmpty(message = "Roles must not be empty")
         Set<RoleRequest> roles) {
 }

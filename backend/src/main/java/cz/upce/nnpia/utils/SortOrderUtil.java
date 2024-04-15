@@ -21,10 +21,10 @@ public class SortOrderUtil {
             if (strOrderPairs[0].contains(",")){
                 for (String sortOrder : strOrderPairs) {
                     String[] sortParams = sortOrder.split(",");
-                    sortPairs.add(new Order(StringEnumUtil.searchEnum(Sort.Direction.class, sortParams[1]), sortParams[0]));
+                    sortPairs.add(new Order(EnumUtil.getEnumByString(Sort.Direction.class, sortParams[1]), sortParams[0]));
                 }
             } else {
-                sortPairs.add(new Order(StringEnumUtil.searchEnum(Sort.Direction.class, strOrderPairs[1]), strOrderPairs[0]));
+                sortPairs.add(new Order(EnumUtil.getEnumByString(Sort.Direction.class, strOrderPairs[1]), strOrderPairs[0]));
             }
         }
         return sortPairs;

@@ -3,10 +3,9 @@ package cz.upce.nnpia.services;
 import cz.upce.nnpia.dtos.request.ProductRequest;
 import cz.upce.nnpia.dtos.response.ProductResponse;
 import cz.upce.nnpia.exceptions.ResourceNotFoundException;
-import cz.upce.nnpia.mappers.ProductMapper;
 import cz.upce.nnpia.model.Product;
 import cz.upce.nnpia.repositories.ProductRepository;
-import cz.upce.nnpia.repositories.UserRepository;
+import cz.upce.nnpia.services.mappers.ProductMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
@@ -20,9 +19,6 @@ import java.util.stream.Collectors;
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
-    private final UserRepository userRepository;
-
-
 
     public List<ProductResponse> findAll(Specification<Product> filter, PageRequest pageRequest) {
         return productRepository.findAll(filter, pageRequest)

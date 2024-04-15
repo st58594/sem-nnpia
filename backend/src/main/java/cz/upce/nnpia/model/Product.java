@@ -3,10 +3,7 @@ package cz.upce.nnpia.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import cz.upce.nnpia.dtos.response.ProductResponse;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.util.HashSet;
@@ -26,8 +23,7 @@ public class Product extends BaseEntity{
     private Long id;
 
     @Column(nullable = false)
-    @NotNull
-    @NotEmpty
+    @NotBlank
     private String name;
 
     @Column(nullable = false)

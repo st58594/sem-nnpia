@@ -8,10 +8,10 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public enum State {
-    CREATED("Vytvořeno"),
-    PRODUCTION("V realizaci"),
-    DONE("Dokončeno"),
-    CANCELLED("Zrušeno");
+    CREATED("Created"),
+    PRODUCTION("Production"),
+    DONE("Done"),
+    CANCELLED("Cancelled");
 
     private final String name;
 

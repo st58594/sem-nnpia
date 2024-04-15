@@ -1,6 +1,8 @@
 package cz.upce.nnpia.utils;
 
-public class StringEnumUtil {
+import cz.upce.nnpia.exceptions.ResourceNotFoundException;
+
+public class EnumUtil {
 
     /**
      * Convert the raw string to the instance of the Enum<T>
@@ -9,11 +11,11 @@ public class StringEnumUtil {
      * @return example: Sort.Direction.ASC
      * @param <T> example: Sort.Direction
      */
-    public static <T extends Enum<?>> T searchEnum(Class<T> enumType, String search){
+    public static <T extends Enum<?>> T getEnumByString(Class<T> enumType, String search) throws ResourceNotFoundException{
         for (T each : enumType.getEnumConstants()) {
             if (each.name().compareToIgnoreCase(search) == 0)
                 return each;
         }
-        return null;
+        throw new ResourceNotFoundException("The enum \""+search+"\" not found ");
     }
 }

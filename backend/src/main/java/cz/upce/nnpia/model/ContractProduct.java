@@ -1,9 +1,9 @@
 package cz.upce.nnpia.model;
 
+import cz.upce.nnpia.dtos.response.ContractProductResponse;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -25,12 +25,11 @@ public class ContractProduct {
     @Min(0)
     @Max(Integer.MAX_VALUE)
     @NotNull
-    @NotEmpty
     private Integer ordered;
 
     @ManyToOne
     @MapsId("contractId")
-    @JoinColumn(name = "contract_id", foreignKey = @ForeignKey(name = "fk_contract_id"))
+    @JoinColumn(name = "contract_id")
     private Contract contract;
 
     @ManyToOne
@@ -38,14 +37,15 @@ public class ContractProduct {
     @JoinColumn(name = "product_id", foreignKey = @ForeignKey(name = "fk_product_id"))
     private Product product;
 
-    public void setContract(Contract contract) {
-        this.contract = contract;
-        id.setContractId(contract.getId());
+    public ContractProduct(Long contractId, Long productId, int ordered) {
+        id = new ContractProductKey(contractId, productId);
+        this.ordered = ordered;
+        this.contract = Contract.builder().id(contractId).build();
+        this.product = Product.builder().id(productId).build();
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
-        id.setProductId(product.getId());
+    public ContractProductResponse toDto(){
+        return new ContractProductResponse(product.toDto(), ordered);
     }
 
     @Override
