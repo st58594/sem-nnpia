@@ -31,19 +31,19 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponse> createUser(@RequestBody @Valid UserRequest userRequest){
-        var body = userService.createUser(userRequest);
+        var body = userService.create(userRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(body);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserResponse> updateUser(@PathVariable Long id, @RequestBody UserRequest userRequest){
-        var body = userService.updateUser(id, userRequest);
+        var body = userService.update(id, userRequest);
         return ResponseEntity.ok(body);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id){
-        userService.deleteUser(id);
+        userService.delete(id);
         return ResponseEntity.noContent().build();
     }
 

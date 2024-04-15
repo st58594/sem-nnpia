@@ -32,6 +32,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests(request -> request
                 .requestMatchers("user/**").hasAuthority("ADMIN")
+                .requestMatchers("product/**").hasAnyAuthority("ADMIN", "PRODUCT-MANAGER")
 
                 .requestMatchers(getPublicRoutes()).permitAll().anyRequest().authenticated()
         );

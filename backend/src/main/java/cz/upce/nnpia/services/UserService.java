@@ -51,13 +51,13 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(()-> new ResourceNotFoundException("User not found"));
     }
 
-    public UserResponse createUser(UserRequest userRequest) {
+    public UserResponse create(UserRequest userRequest) {
         checkUsername(userRequest.username());
         checkEmail(userRequest.email());
         return userRepository.save(userMapper.toUser(userRequest)).toDto();
     }
 
-    public UserResponse updateUser(Long id, UserRequest userRequest) {
+    public UserResponse update(Long id, UserRequest userRequest) {
         User user = userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User not found."));
 
         if (!userRequest.username().isBlank()){
@@ -80,9 +80,9 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user).toDto();
     }
 
-    public void deleteUser(Long id) {
+    public void delete(Long id) {
         if (!userRepository.existsById(id)){
-            throw new ResourceNotFoundException("User not found.");
+            throw new ResourceNotFoundException("User not found");
         }
         userRepository.deleteById(id);
     }

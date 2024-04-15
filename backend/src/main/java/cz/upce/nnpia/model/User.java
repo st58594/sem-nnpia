@@ -1,5 +1,6 @@
 package cz.upce.nnpia.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import cz.upce.nnpia.dtos.response.UserResponse;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -39,10 +40,14 @@ public class User extends BaseEntity implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
+            joinColumns = @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_user_id")),
+            inverseJoinColumns = @JoinColumn(name = "role_id", foreignKey = @ForeignKey(name = "fk_role_id"))
     )
     private Set<Role> roles;
+
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private Set<Contract> contracts;
 
     public UserResponse toDto(){
         return new UserResponse(id, username, email, firstName,lastName, roles, created, updated);
