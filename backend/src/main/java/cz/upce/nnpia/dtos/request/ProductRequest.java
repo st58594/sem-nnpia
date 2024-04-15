@@ -5,5 +5,6 @@ import jakarta.validation.constraints.NotNull;
 
 public record ProductRequest(
         @NotBlank String name,
-        @NotNull Double price) {
+        @NotNull Double price,
+        @NotNull Integer inStock) {
 }

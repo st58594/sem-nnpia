@@ -48,6 +48,9 @@ public class ProductService {
         if (productRequest.price() != null)
             product.setPrice(productRequest.price());
 
+        if (productRequest.inStock() != null)
+            product.setInStock(productRequest.inStock());
+
         return productRepository.save(product).toDto();
     }
 

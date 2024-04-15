@@ -3,6 +3,10 @@ package cz.upce.nnpia.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import cz.upce.nnpia.dtos.response.ProductResponse;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.HashSet;
@@ -22,10 +26,20 @@ public class Product extends BaseEntity{
     private Long id;
 
     @Column(nullable = false)
+    @NotNull
+    @NotEmpty
     private String name;
 
     @Column(nullable = false)
+    @NotNull
+    @Min(0)
     private double price;
+
+    @Column(nullable = false)
+    @NotNull
+    @Min(Integer.MIN_VALUE)
+    @Max(Integer.MAX_VALUE)
+    private int inStock;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     @ToString.Exclude
@@ -33,7 +47,7 @@ public class Product extends BaseEntity{
     private Set<ContractProduct> contractProducts = new HashSet<>();
 
     public ProductResponse toDto(){
-        return new ProductResponse(id,name, price);
+        return new ProductResponse(id,name, price, inStock);
     }
 
 }

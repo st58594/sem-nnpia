@@ -1,9 +1,6 @@
 package cz.upce.nnpia;
 
 import com.github.javafaker.Faker;
-import com.github.javafaker.service.FakeValues;
-import com.github.javafaker.service.FakeValuesService;
-import com.github.javafaker.service.RandomService;
 import cz.upce.nnpia.dtos.request.ProductRequest;
 import cz.upce.nnpia.model.Role;
 import cz.upce.nnpia.model.User;
@@ -28,47 +25,48 @@ public class NnpiaApplication {
 	@Bean
 	public CommandLineRunner commandLineRunner(UserService userService, RoleService roleService, ProductService productService){
 		return args -> {
-//			Faker faker = new Faker(new Locale("cs-CZ"));
+			Faker faker = new Faker(new Locale("cs-CZ"));
 			try {
-//				roleService.save(Role.builder().role("ADMIN").build());
-//				roleService.save(Role.builder().role("PRODUCT-MANAGER").build());
-//				roleService.save(Role.builder().role("GUEST").build());
-//
-//				userService.save(User.builder()
-//						.username("admin")
-//						.email(faker.internet().emailAddress())
-//						.firstName(faker.name().firstName())
-//						.lastName(faker.name().lastName())
-//						.password("admin")
-//						.roles(Set.of(roleService.findByRole("ADMIN")))
-//						.build());
-//
-//				userService.save(User.builder()
-//						.username("product-manager")
-//						.email(faker.internet().emailAddress())
-//						.firstName(faker.name().firstName())
-//						.lastName(faker.name().lastName())
-//						.password("product-manager")
-//						.roles(Set.of(roleService.findByRole("PRODUCT-MANAGER")))
-//						.build());
-//
-//				userService.save(User.builder()
-//						.username("guest")
-//						.email("guest@guest.cz")
-//						.firstName("guest")
-//						.lastName("guest")
-//						.password("guest")
-//						.roles(Set.of(roleService.findByRole("GUEST")))
-//						.build());
-//
-//				for (int i = 0; i < 150; i++) {
-//					productService.create(
-//							new ProductRequest(
-//									faker.commerce().productName(),
-//									faker.number().randomDouble(4, 0, 10000)
-//							)
-//					);
-//				}
+				roleService.save(Role.builder().role("ADMIN").build());
+				roleService.save(Role.builder().role("PRODUCT-MANAGER").build());
+				roleService.save(Role.builder().role("GUEST").build());
+
+				userService.save(User.builder()
+						.username("admin")
+						.email(faker.internet().emailAddress())
+						.firstName(faker.name().firstName())
+						.lastName(faker.name().lastName())
+						.password("admin")
+						.roles(Set.of(roleService.findByRole("ADMIN")))
+						.build());
+
+				userService.save(User.builder()
+						.username("product-manager")
+						.email(faker.internet().emailAddress())
+						.firstName(faker.name().firstName())
+						.lastName(faker.name().lastName())
+						.password("product-manager")
+						.roles(Set.of(roleService.findByRole("PRODUCT-MANAGER")))
+						.build());
+
+				userService.save(User.builder()
+						.username("guest")
+						.email("guest@guest.cz")
+						.firstName("guest")
+						.lastName("guest")
+						.password("guest")
+						.roles(Set.of(roleService.findByRole("GUEST")))
+						.build());
+
+				for (int i = 0; i < 150; i++) {
+					productService.create(
+							new ProductRequest(
+									faker.commerce().productName(),
+									faker.number().randomDouble(4, 0, 10000),
+									faker.number().numberBetween(-10, 100)
+							)
+					);
+				}
 			} catch (Exception ex){
 				System.out.println(ex.getMessage());
 			}

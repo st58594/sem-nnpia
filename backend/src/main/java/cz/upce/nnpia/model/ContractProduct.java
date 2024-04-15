@@ -1,6 +1,10 @@
 package cz.upce.nnpia.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.Objects;
@@ -16,6 +20,13 @@ import java.util.Objects;
 public class ContractProduct {
     @EmbeddedId
     private ContractProductKey id = new ContractProductKey();
+
+    @Column(nullable = false)
+    @Min(0)
+    @Max(Integer.MAX_VALUE)
+    @NotNull
+    @NotEmpty
+    private Integer ordered;
 
     @ManyToOne
     @MapsId("contractId")
