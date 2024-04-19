@@ -4,10 +4,10 @@ import cz.upce.nnpia.dtos.request.UserRequest;
 import cz.upce.nnpia.dtos.response.UserResponse;
 import cz.upce.nnpia.exceptions.NotUniqueAttributeException;
 import cz.upce.nnpia.exceptions.ResourceNotFoundException;
-import cz.upce.nnpia.services.mappers.RoleMapper;
-import cz.upce.nnpia.services.mappers.UserMapper;
 import cz.upce.nnpia.model.User;
 import cz.upce.nnpia.repositories.UserRepository;
+import cz.upce.nnpia.services.mappers.RoleMapper;
+import cz.upce.nnpia.services.mappers.UserMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,12 +32,6 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username + " not found."));
     }
 
-    @Transactional
-    public void save(User user){
-        user.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(user);
-    }
-
     public List<UserResponse> findAll() {
         return userRepository.findAll()
                 .stream()
@@ -51,14 +45,16 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(()-> new ResourceNotFoundException("User not found"));
     }
 
+    @Transactional
     public UserResponse create(UserRequest userRequest) {
         checkUsername(userRequest.username());
         checkEmail(userRequest.email());
         return userRepository.save(userMapper.toUser(userRequest)).toDto();
     }
 
+    @Transactional
     public UserResponse update(Long id, UserRequest userRequest) {
-        User user = userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User not found."));
+        User user = userRepository.findById(id).orElseThrow(()->new ResourceNotFoundException("User not found"));
 
         if (!userRequest.username().isBlank()){
             checkUsername(userRequest.username());
@@ -89,11 +85,11 @@ public class UserService implements UserDetailsService {
 
     private void checkUsername(String username){
         if (userRepository.existsByUsername(username))
-            throw new NotUniqueAttributeException("User with this username already exist");
+            throw new NotUniqueAttributeException("User with this username \""+username+"\" already exist");
     }
 
     private void checkEmail(String email){
         if (userRepository.existsByEmail(email))
-            throw new NotUniqueAttributeException("User with this email already exist");
+            throw new NotUniqueAttributeException("User with this email \""+email+"\" already exist");
     }
 }

@@ -2,6 +2,7 @@ package cz.upce.nnpia.services;
 
 import cz.upce.nnpia.dtos.request.ContractProductRequest;
 import cz.upce.nnpia.dtos.request.ContractRequest;
+import cz.upce.nnpia.dtos.request.ProductRequest;
 import cz.upce.nnpia.dtos.response.ContractResponse;
 import cz.upce.nnpia.dtos.response.ProductResponse;
 import cz.upce.nnpia.exceptions.ResourceNotFoundException;
@@ -40,29 +41,25 @@ public class ContractService {
     @Transactional
     public ContractResponse create(ContractRequest contractRequest){
 
-        //mising id
-        //state in request
         State state = EnumUtil.getEnumByString(State.class, contractRequest.state());
 
-        //count total price and check if product exists
         double totalPrice = 0;
         for (ContractProductRequest contractProduct : contractRequest.contractProducts()){
             ProductResponse productResponse = productService.findById(contractProduct.productID());
+            productService.update(contractProduct.productID(), new ProductRequest("", null, productResponse.inStock()-contractProduct.ordered()));
             totalPrice += productResponse.price() * contractProduct.ordered();
         }
 
-        //user = logged user
         User user = Auth.getLoggedUser();
 
-        //save contract
         Contract savedContract = contractRepository.save(contractMapper.toContract(state, totalPrice, user));
 
-        //save contractProduct
         Set<ContractProduct> savedContractProducts = new HashSet<>();
         for (ContractProductRequest request : contractRequest.contractProducts()){
             ContractProduct contractProduct = new ContractProduct(savedContract.getId(), request.productID(), request.ordered());
             savedContractProducts.add(contractProductService.create(contractProduct));
         }
+
         savedContract.setContractProducts(savedContractProducts);
         return savedContract.toDto();
     }

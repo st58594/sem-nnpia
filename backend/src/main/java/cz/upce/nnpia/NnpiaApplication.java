@@ -1,17 +1,18 @@
 package cz.upce.nnpia;
 
 import com.github.javafaker.Faker;
-import cz.upce.nnpia.dtos.request.ContractProductRequest;
-import cz.upce.nnpia.dtos.request.ContractRequest;
-import cz.upce.nnpia.dtos.request.ProductRequest;
+import cz.upce.nnpia.dtos.request.*;
 import cz.upce.nnpia.model.Role;
 import cz.upce.nnpia.model.State;
-import cz.upce.nnpia.model.User;
-import cz.upce.nnpia.services.*;
+import cz.upce.nnpia.services.ContractService;
+import cz.upce.nnpia.services.ProductService;
+import cz.upce.nnpia.services.RoleService;
+import cz.upce.nnpia.services.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +29,7 @@ public class NnpiaApplication {
     }
 
     @Bean
+    @Profile("!test")
     public CommandLineRunner commandLineRunner(UserService userService, RoleService roleService, ProductService productService, ContractService contractService) {
         return args -> {
             Faker faker = new Faker();
@@ -40,36 +42,40 @@ public class NnpiaApplication {
                 roleService.save(Role.builder().role("PRODUCT-MANAGER").build());
                 roleService.save(Role.builder().role("GUEST").build());
 
-                userService.save(User.builder()
-                        .username("admin")
-                        .email(faker.internet().emailAddress())
-                        .firstName(faker.name().firstName())
-                        .lastName(faker.name().lastName())
-                        .password("admin")
-                        .roles(Set.of(roleService.findByRole("ADMIN")))
-                        .build());
 
+                userService.create(new UserRequest(
+                                "admin",
+                                faker.internet().emailAddress(),
+                                faker.name().firstName(),
+                                faker.name().lastName(),
+                                "admin",
+                                Set.of(new RoleRequest("ADMIN"))
+                        )
+                );
+
+                //fake login
                 UserDetails userDetails = userService.loadUserByUsername("admin");
-                Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails,null, userDetails.getAuthorities());
+                Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
-                userService.save(User.builder()
-                        .username("product-manager")
-                        .email(faker.internet().emailAddress())
-                        .firstName(faker.name().firstName())
-                        .lastName(faker.name().lastName())
-                        .password("product-manager")
-                        .roles(Set.of(roleService.findByRole("PRODUCT-MANAGER")))
-                        .build());
-
-                userService.save(User.builder()
-                        .username("guest")
-                        .email("guest@guest.cz")
-                        .firstName("guest")
-                        .lastName("guest")
-                        .password("guest")
-                        .roles(Set.of(roleService.findByRole("GUEST")))
-                        .build());
+                userService.create(new UserRequest(
+                                "product-manager",
+                                faker.internet().emailAddress(),
+                                faker.name().firstName(),
+                                faker.name().lastName(),
+                                "product-manager",
+                                Set.of(new RoleRequest("PRODUCT-MANAGER"))
+                        )
+                );
+                userService.create(new UserRequest(
+                                "guest",
+                                faker.internet().emailAddress(),
+                                faker.name().firstName(),
+                                faker.name().lastName(),
+                                "guest",
+                                Set.of(new RoleRequest("GUEST"))
+                        )
+                );
 
                 for (int i = 0; i < MAX_PRODUCTS; i++) {
                     productService.create(

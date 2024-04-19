@@ -34,7 +34,7 @@ public class ContractProduct {
 
     @ManyToOne
     @MapsId("productId")
-    @JoinColumn(name = "product_id", foreignKey = @ForeignKey(name = "fk_product_id"))
+    @JoinColumn(name = "product_id")
     private Product product;
 
     public ContractProduct(Long contractId, Long productId, int ordered) {

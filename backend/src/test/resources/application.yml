@@ -1,0 +1,31 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /api
+spring:
+  application:
+    name: "nnpia"
+  datasource:
+    url: jdbc:h2://mem:db;DB_CLOSE_DELAY=-1
+    username: sa
+    password: sa
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        show_sql: true;
+        format_sql: true
+springdoc:
+  swagger-ui:
+    path: /swagger
+  api-docs:
+    path: /swagger-docs
+jwt:
+  secret: "BvCMNTJj1b1W/lU4N5sAyPIv3EoJakfGg9E6FS/YO1MHoFPKIQmqRIwlb1pzRZ30tSzQsxUlpqof+o+OvwVJRA=="
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
