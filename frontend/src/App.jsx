@@ -1,21 +1,31 @@
-import './App.css'
-import ReactConcept from "./components/ReactConcept.jsx";
-import {data} from "./assets/init-data.js";
+import './styles/App.css'
+import {Suspense} from "react";
+import {Outlet} from "react-router-dom"
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
     return (
-        <>
-            <div>
-                {
-                    data.map((value, index) => (
-                            <ReactConcept key={index} description={value.description} title={value.title} image={value.image}></ReactConcept>
-                        )
-                    )
-                }
+        <Suspense>
+            <div id = "app">
+                <Outlet />
+                <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss={false}
+                    draggable
+                    pauseOnHover
+                    theme="colored"
+                    transition: Bounce/>
             </div>
-        </>
-    )
+        </Suspense>
+    );
 }
 
 export default App
