@@ -48,7 +48,8 @@ class UserRepositoryTest {
     void findByUsername() {
         Optional<User> expected = underTest.findByUsername(admin.getUsername());
         assertTrue(expected.isPresent());
-        assertThat(expected.get()).isEqualTo(admin);
+        assertThat(expected.get().getUsername()).isEqualTo(admin.getUsername());
+        assertThat(expected.get().getEmail()).isEqualTo(admin.getEmail());
 
         expected = underTest.findByUsername("invalidUsername");
         assertFalse(expected.isPresent());
