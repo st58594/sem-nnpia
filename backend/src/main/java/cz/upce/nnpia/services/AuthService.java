@@ -3,6 +3,7 @@ package cz.upce.nnpia.services;
 import cz.upce.nnpia.dtos.request.LoginRequest;
 import cz.upce.nnpia.dtos.response.JWTResponse;
 import cz.upce.nnpia.exceptions.InvalidCredentialException;
+import cz.upce.nnpia.model.User;
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,10 +21,10 @@ public class AuthService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.username(), request.password()));
 
-            var user = userService.loadUserByUsername(request.password());
+            User user = (User) userService.loadUserByUsername(request.password());
             var jwtToken = jwtService.generateToken(user);
 
-            return new JWTResponse(jwtToken);
+            return new JWTResponse(user.toDto(), jwtToken);
 
         } catch (AuthenticationException e){
             throw new InvalidCredentialException("Invalid username or password");
