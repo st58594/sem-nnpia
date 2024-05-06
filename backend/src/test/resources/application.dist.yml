@@ -7,8 +7,8 @@ spring:
     name: "nnpia"
   datasource:
     url: jdbc:h2:mem:db;DB_CLOSE_DELAY=-1
-    username: sa
-    password: sa
+    username: "to-be-replace"
+    password: "to-be-replace"
     driver-class-name: org.h2.Driver
   jpa:
     hibernate:
@@ -23,7 +23,7 @@ springdoc:
   api-docs:
     path: /swagger-docs
 jwt:
-  secret: "BvCMNTJj1b1W/lU4N5sAyPIv3EoJakfGg9E6FS/YO1MHoFPKIQmqRIwlb1pzRZ30tSzQsxUlpqof+o+OvwVJRA=="
+  secret: "to-be-replace"
 logging:
   level:
     org:
