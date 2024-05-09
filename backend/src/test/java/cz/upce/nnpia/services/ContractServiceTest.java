@@ -19,7 +19,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
