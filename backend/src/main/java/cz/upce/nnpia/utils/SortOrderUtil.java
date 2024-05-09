@@ -21,7 +21,9 @@ public class SortOrderUtil {
             if (strOrderPairs[0].contains(",")){
                 for (String sortOrder : strOrderPairs) {
                     String[] sortParams = sortOrder.split(",");
-                    sortPairs.add(new Order(EnumUtil.getEnumByString(Sort.Direction.class, sortParams[1]), sortParams[0]));
+                    for (int i = 0; i < sortParams.length; i+=2) {
+                        sortPairs.add(new Order(EnumUtil.getEnumByString(Sort.Direction.class, sortParams[i+1]), sortParams[i]));
+                    }
                 }
             } else {
                 sortPairs.add(new Order(EnumUtil.getEnumByString(Sort.Direction.class, strOrderPairs[1]), strOrderPairs[0]));
