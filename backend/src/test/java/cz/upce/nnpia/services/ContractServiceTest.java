@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -75,7 +76,7 @@ class ContractServiceTest {
     }
     @Test
     void create() {
-        List<ProductResponse> productResponseList = productService.findAll(null, PageRequest.of(0,2));
+        Page<ProductResponse> productResponseList = productService.findAll(null, PageRequest.of(0,2));
         Set<ContractProductRequest> contractProductRequests = productResponseList
                 .stream()
                 .map(productResponse -> new ContractProductRequest(productResponse.id(), 1))

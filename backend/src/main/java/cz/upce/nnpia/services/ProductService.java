@@ -7,6 +7,7 @@ import cz.upce.nnpia.model.Product;
 import cz.upce.nnpia.repositories.ProductRepository;
 import cz.upce.nnpia.services.mappers.ProductMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -20,11 +21,9 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
-    public List<ProductResponse> findAll(Specification<Product> filter, PageRequest pageRequest) {
+    public Page<ProductResponse> findAll(Specification<Product> filter, PageRequest pageRequest) {
         return productRepository.findAll(filter, pageRequest)
-                .stream()
-                .map(Product::toDto)
-                .collect(Collectors.toList());
+                .map(Product::toDto);
     }
     public ProductResponse findById(Long id) {
         return productRepository.findById(id)

@@ -11,6 +11,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
@@ -26,16 +27,18 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
     @GetMapping
-    public List<ProductResponse> getAllProducts(
+    public Page<ProductResponse> getAllProducts(
             @RequestParam(required = false, defaultValue = "0") @Min(0) @Max(Integer.MAX_VALUE) Integer page,
             @RequestParam(required = false, defaultValue = Constants.PAGE_SIZE_STR) @Min(1) @Max(Constants.MAX_PAGE_SIZE) Integer pageSize,
             @RequestParam(required = false, defaultValue = Constants.ORDER_BY_CREATED_DESC) String sort,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) Double fromPrice,
-            @RequestParam(required = false) Double toPrice
+            @RequestParam(required = false) Double toPrice,
+            @RequestParam(required = false) Double fromInStock,
+            @RequestParam(required = false) Double toInStock
     ){
         List<Sort.Order> orders = SortOrderUtil.stringPairsToOrders(new String[] {sort});
-        Specification<Product> filter = ProductSpecification.filterBy(name, fromPrice, toPrice);
+        Specification<Product> filter = ProductSpecification.filterBy(name, fromPrice, toPrice, fromInStock, toInStock);
         return productService.findAll(filter, PageRequest.of(page, pageSize, Sort.by(orders)));
     }
 

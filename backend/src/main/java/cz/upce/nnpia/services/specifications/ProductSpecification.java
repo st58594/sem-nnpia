@@ -5,10 +5,12 @@ import org.springframework.data.jpa.domain.Specification;
 
 public class ProductSpecification {
 
-    public static Specification<Product> filterBy(String name, Double fromPrice, Double toPrice){
+    public static Specification<Product> filterBy(String name, Double fromPrice, Double toPrice, Double fromInStock, Double toInStock){
         return Specification.where(containName(name))
                 .and(priceGT(fromPrice))
-                .and(priceLT(toPrice));
+                .and(priceLT(toPrice))
+                .and(inStockGT(fromInStock))
+                .and(inStockLT(toInStock));
     }
 
     public static Specification<Product> containName(String name) {
@@ -27,5 +29,16 @@ public class ProductSpecification {
         return (root, query, criteriaBuilder) -> to == null
                 ? null
                 : criteriaBuilder.lessThanOrEqualTo(root.get("price"), to);
+    }
+    public static Specification<Product> inStockGT(Double from) {
+        return (root, query, criteriaBuilder) -> from == null
+                ? null
+                : criteriaBuilder.greaterThanOrEqualTo(root.get("inStock"), from);
+    }
+
+    public static Specification<Product> inStockLT(Double to) {
+        return (root, query, criteriaBuilder) -> to == null
+                ? null
+                : criteriaBuilder.lessThanOrEqualTo(root.get("inStock"), to);
     }
 }
