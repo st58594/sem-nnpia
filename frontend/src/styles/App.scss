@@ -5,3 +5,12 @@
     left: 50%;
     transform: translate(-50%, -25%);
 }
+.pagination{
+    flex-grow: 1;
+}
+.data-grid-footer{
+    display: flex;
+    div {
+        max-width: 100px;
+    }
+}

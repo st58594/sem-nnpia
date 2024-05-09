@@ -1,4 +1,4 @@
-import './styles/App.css'
+import './styles/App.scss'
 import {Suspense} from "react";
 import {Outlet} from "react-router-dom"
 
@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() {
 
     return (
-        <Suspense>
+        <Suspense fallback="loading">
             <div id = "app">
                 <Outlet />
                 <ToastContainer

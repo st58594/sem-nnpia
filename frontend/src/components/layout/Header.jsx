@@ -29,7 +29,7 @@ function Header({title}) {
                     <a href="/" onClick={()=> handleNavLinkClick("home")} className="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
                         <h1 className={activeLink === "home" ? "text-secondary" : ""}>NNPIA</h1>
                     </a>
-                    <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <ul className="nav col-12 col-lg-auto me-lg-auto mx-2 mb-2 justify-content-center mb-md-0">
                         <li>
                             <Link to="/users" onClick={()=>handleNavLinkClick("users")} className={"nav-link px-2 " + (activeLink === "users" ? "text-secondary" : "text-white")}>Uživatelé</Link>
                         </li>
