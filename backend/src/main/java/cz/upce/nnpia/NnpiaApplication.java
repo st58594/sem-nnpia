@@ -49,7 +49,7 @@ public class NnpiaApplication {
                                 faker.name().firstName(),
                                 faker.name().lastName(),
                                 "admin",
-                                Set.of(new RoleRequest("ADMIN"))
+                                Set.of(new RoleRequest("ADMIN"), new RoleRequest("PRODUCT-MANAGER"))
                         )
                 );
 

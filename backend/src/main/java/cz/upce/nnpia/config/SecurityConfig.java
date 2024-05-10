@@ -34,6 +34,7 @@ public class SecurityConfig {
                 .requestMatchers("user/**").hasAuthority("ADMIN")
                 .requestMatchers("admin/**").hasAuthority("ADMIN")
                 .requestMatchers("product/**").hasAnyAuthority("ADMIN", "PRODUCT-MANAGER")
+                .requestMatchers("contracts/**").hasAuthority("ADMIN")
 
                 .requestMatchers(getPublicRoutes()).permitAll().anyRequest().authenticated()
         );

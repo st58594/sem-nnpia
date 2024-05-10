@@ -1,25 +1,15 @@
-import {Link, useNavigate} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import '../../styles/Header.scss';
 import PropTypes from 'prop-types';
-import * as store from '../../store/slices/userSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
 import {useState} from "react";
+import LogoutButton from "../LogoutButton.jsx";
 
 function Header({title}) {
-    const navigate = useNavigate()
-    const dispatch = useDispatch();
     const user = useSelector(state => state.user.user);
     const [activeLink, setActiveLink] = useState(title);
     const handleNavLinkClick = (link) => {
         setActiveLink(link);
-    }
-
-    const logout = (e) => {
-        e.preventDefault()
-        dispatch(store.logout())
-        toast.info(user.firstName + " " + user.lastName + " odhlášen")
-        navigate("/login")
     }
 
     return (
@@ -42,7 +32,7 @@ function Header({title}) {
                     </ul>
                     <div className="text-end">
                         <span className= "p-2">{user && user.firstName +" "+ user.lastName}</span>
-                        <button type="button" className="btn btn-outline-light me-2" onClick={logout}>Logout</button>
+                        <LogoutButton className={"btn btn-outline-light me-2"}/>
                     </div>
                 </div>
             </div>

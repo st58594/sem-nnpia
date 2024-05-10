@@ -13,19 +13,19 @@ const routes = [
         children: [
             {
                 path: '',
-                element: <Page title="home" guard="auth"><Home/></Page>
+                element: <Page title="home" guards={["auth"]}><Home/></Page>
             },
             {
                 path: 'users',
-                element: <Page title="users" guard="auth"><Users/></Page>
+                element: <Page title="users" guards={["admin"]}><Users/></Page>
             },
             {
                 path: 'products',
-                element: <Page title="products" guard="auth"><Products/></Page>
+                element: <Page title="products" guards={["admin", "product-manager"]}><Products/></Page>
             },
             {
                 path: 'contracts',
-                element: <Page title="contracts" guard="auth"><Contracts/></Page>
+                element: <Page title="contracts" guards={["admin"]}><Contracts/></Page>
             },
             {
                 path: 'login',
