@@ -33,18 +33,18 @@ function Login(){
     return (
           <>
             <div className="login">
-                <h1>Přihlášení</h1>
+                <h1>Log in</h1>
                 <form onSubmit={login}>
-                    <fieldset disabled={loading}>
+                    <fieldset className="my-3" disabled={loading}>
                         <div className="mb-3">
-                            <label form="username" className="form-label">Login</label>
+                            <label form="username" className="form-label">User name</label>
                             <input id="username" className="form-control" value={user.username} required type={"text"} onChange={(value) => setUser( {...user, username: value.target.value})}/>
                         </div>
                         <div className="mb-3">
-                            <label form="password" className="form-label">Heslo</label>
+                            <label form="password" className="form-label">Password</label>
                             <input id="password" type="password" className="form-control" value={user.password} required onChange={value=>setUser({...user, password: value.target.value})}/>
                         </div>
-                        <input type="submit" className="btn btn-primary" value="Přihlásit se"/>
+                        <input type="submit" className="btn btn-primary" value="Log in"/>
                     </fieldset>
                 </form>
             </div>

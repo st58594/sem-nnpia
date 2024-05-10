@@ -15,7 +15,7 @@ function LogoutButton(className) {
         navigate("/login")
     }
     return (
-        <button type="button" onClick={logout} className={className.className}>Logout</button>
+        <button type="button" onClick={logout} className={className.className}>Log out</button>
     )
 }
 LogoutButton.propTypes = {
