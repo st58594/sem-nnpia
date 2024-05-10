@@ -40,7 +40,7 @@ function Users() {
                             <td>{user.email}</td>
                             <td>{user.firstName}</td>
                             <td>{user.lastName}</td>
-                            <td>{user.roles.map(role => (<span key={role.id}>{role.role}</span>))}
+                            <td>{user.roles.map(role => (<span className={"badge badge-primary"} key={role.id}>{role.role}</span>))}
                             </td>
                         </tr>
                     ))
