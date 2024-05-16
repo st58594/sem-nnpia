@@ -12,7 +12,7 @@ function Page({title, guards, children}) {
     let error = null;
 
     useEffect(() => {
-        document.title = title + ".pageTitle";
+        document.title = title;
     }, [title]);
 
     if (!user)
